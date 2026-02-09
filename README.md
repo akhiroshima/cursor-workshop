@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cursor Workshop — Starter Repo
 
-## Getting Started
+Everything you need to start building with Cursor. Clone, install, set two env vars, run.
 
-First, run the development server:
+## Prerequisites
+
+- **Node.js 18+** — check with `node -v`
+- **npm** (comes with Node) — or pnpm/yarn if you prefer
+- **A free Supabase account** — sign up at [supabase.com](https://supabase.com)
+
+## Quick Start
 
 ```bash
+# 1. Clone the repo
+git clone <repo-url>
+cd cursor-workshop
+
+# 2. Install dependencies
+npm install
+
+# 3. Set up environment variables (see below)
+cp .env.example .env.local
+
+# 4. Start the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) — you should see a card with an input and a button. If you see it, you're good to go!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You need **two** values from Supabase. Here's how to get them:
 
-## Learn More
+### Step 1 — Open your `.env.local` file
 
-To learn more about Next.js, take a look at the following resources:
+It's in the **project root** (same folder as `package.json`). If you ran `cp .env.example .env.local` above, the file already exists with empty values.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Step 2 — Get your Supabase keys
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Go to [supabase.com/dashboard](https://supabase.com/dashboard)
+2. Select your project (or click **New Project** to create one — the free tier works fine)
+3. In the sidebar, click **Project Settings** (the gear icon)
+4. Click **API** in the left menu
+5. You'll see two values you need:
 
-## Deploy on Vercel
+| Variable                          | Where to find it                  |
+| --------------------------------- | --------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`        | **Project URL** at the top        |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`   | **anon public** key under Project API keys |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Step 3 — Paste them into `.env.local`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Your `.env.local` should look like this (with your actual values):
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+Save the file. If `npm run dev` is already running, restart it.
+
+## Tech Stack
+
+| Technology    | What it does                             |
+| ------------- | ---------------------------------------- |
+| Next.js 16    | React framework (App Router, TypeScript) |
+| Supabase      | Backend-as-a-service (database, auth)    |
+| Tailwind CSS  | Utility-first CSS framework              |
+| shadcn/ui     | Pre-built UI components (see below)      |
+
+### Pre-installed shadcn/ui Components
+
+These components are ready to import from `@/components/ui/`:
+
+- `button` · `input` · `label` · `textarea`
+- `card` · `badge` · `tabs`
+- `dialog` · `alert-dialog` · `popover` · `dropdown-menu`
+- `table` · `select` · `switch`
+- `calendar` + `popover` (use together as a date picker)
+- `sonner` (toast notifications)
+
+## Project Structure
+
+```
+src/
+  app/
+    layout.tsx        ← Root layout (includes toast provider)
+    page.tsx          ← Demo page
+    globals.css       ← Tailwind + shadcn theme
+  components/
+    ui/               ← All shadcn/ui components
+  lib/
+    supabase/
+      client.ts       ← Supabase browser client
+    utils.ts          ← Utility functions (cn helper)
+```
+
+## Scripts
+
+| Command         | What it does            |
+| --------------- | ----------------------- |
+| `npm run dev`   | Start dev server        |
+| `npm run build` | Production build        |
+| `npm run start` | Start production server |
+| `npm run lint`  | Run ESLint              |
